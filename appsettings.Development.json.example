@@ -1,0 +1,11 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "JogadoresConnection": "Server=localhost;Database=Jogadores;User=vinicius;Password=1212;"
+  }
+}

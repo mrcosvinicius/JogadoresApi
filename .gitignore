@@ -1,0 +1,59 @@
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.cache
+*.ilk
+*.pdb
+*.obj
+
+# Rider / VS Code
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# NuGet
+*.nupkg
+packages/
+project.lock.json
+
+# Publicação
+publish/
+wwwroot/dist/
+
+# Configurações locais e sensíveis
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json
+secrets.json
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Banco de dados local
+*.db
+*.sqlite
+*.sqlite3
+
+# Testes
+coverage/
+TestResults/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
