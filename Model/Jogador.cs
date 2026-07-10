@@ -21,20 +21,19 @@ namespace JogadoresApi.Model
         [Range(0, int.MaxValue, ErrorMessage = "O número de gols deve ser maior ou igual a 0.")]
         public int? Gols { get; set; }
 
-        [Required(ErrorMessage = "O time é obrigatório.")]
-        [RegularExpression(@"^[a-zA-ZÀ-ÿ\s]+$", ErrorMessage = "O time deve conter apenas letras.")]
-        [MaxLength(40, ErrorMessage = "O time deve ter no máximo 40 caracteres.")]
-        public string Time { get; set; } = string.Empty;
+        public int? TimeId { get; set; }
+
+        public Time? Time { get; set; }
 
         public Jogador() { }
 
-        public Jogador(int id, string nome, string posicao, int? gols, string time)
+        public Jogador(int id, string nome, string posicao, int? gols, int? timeId)
         {
             Id = id;
             Nome = nome;
             Posicao = posicao;
             Gols = gols;
-            Time = time;
+            TimeId = timeId;
         }
     }
 }

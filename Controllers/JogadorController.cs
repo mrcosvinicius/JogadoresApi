@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using JogadoresApi.Model;
 using JogadoresApi.Data;
@@ -24,13 +25,18 @@ namespace JogadoresApi.Controllers
         [HttpGet]
         public IEnumerable<Jogador> ObterJogadores([FromQuery] int pula = 0, [FromQuery] int pega = 5)
         {
-            return _context.Jogadores.Skip(pula).Take(pega);
+            return _context.Jogadores
+                .Include(j => j.Time)
+                .Skip(pula)
+                .Take(pega);
         }
 
         [HttpGet("{id}")]
         public IActionResult ObterJogadorPorId(int id)
         {
-            var jogador = _context.Jogadores.FirstOrDefault(jogador => jogador.Id == id);
+            var jogador = _context.Jogadores
+                .Include(j => j.Time)
+                .FirstOrDefault(jogador => jogador.Id == id);
             if (jogador == null)
             {
                 return NotFound();
