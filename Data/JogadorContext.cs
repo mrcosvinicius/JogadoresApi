@@ -10,5 +10,7 @@ namespace JogadoresApi.Data
 
         }
         public DbSet<Jogador> Jogadores { get; set; }
+        public DbSet<Time> Times { get; set; }
+        public DbSet<Liga> Ligas { get; set; }
     }
 }
