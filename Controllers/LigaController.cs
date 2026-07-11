@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using JogadoresApi.Model;
 using JogadoresApi.Data;
@@ -21,20 +22,28 @@ namespace JogadoresApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Liga> ObterLigas([FromQuery] int pula = 0, [FromQuery] int pega = 5)
+        public IEnumerable<ReadLigaDto> ObterLigas([FromQuery] int pula = 0, [FromQuery] int pega = 5)
         {
-            return _context.Ligas.Skip(pula).Take(pega);
+            var ligas = _context.Ligas
+                .Include(l => l.Times)
+                .Skip(pula)
+                .Take(pega)
+                .ToList();
+
+            return _mapper.Map<List<ReadLigaDto>>(ligas);
         }
 
         [HttpGet("{id}")]
         public IActionResult ObterLigaPorId(int id)
         {
-            var liga = _context.Ligas.FirstOrDefault(liga => liga.Id == id);
+            var liga = _context.Ligas
+                .Include(l => l.Times)
+                .FirstOrDefault(liga => liga.Id == id);
             if (liga == null)
             {
                 return NotFound();
             }
-            return Ok(liga);
+            return Ok(_mapper.Map<ReadLigaDto>(liga));
         }
 
         [HttpPost]
@@ -43,7 +52,7 @@ namespace JogadoresApi.Controllers
             var liga = _mapper.Map<Liga>(ligaDto);
             _context.Ligas.Add(liga);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(ObterLigaPorId), new { id = liga.Id }, liga);
+            return CreatedAtAction(nameof(ObterLigaPorId), new { id = liga.Id }, _mapper.Map<ReadLigaDto>(liga));
         }
 
         [HttpPut("{id}")]
