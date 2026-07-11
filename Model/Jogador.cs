@@ -27,13 +27,14 @@ namespace JogadoresApi.Model
 
         public Jogador() { }
 
-        public Jogador(int id, string nome, string posicao, int? gols, int? timeId)
+        public Jogador(int id, string nome, string posicao, int? gols, int? timeId, Time? time)
         {
             Id = id;
             Nome = nome;
             Posicao = posicao;
             Gols = gols;
             TimeId = timeId;
+            Time = time;
         }
     }
 }
