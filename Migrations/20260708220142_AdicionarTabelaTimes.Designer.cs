@@ -3,6 +3,7 @@ using JogadoresApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JogadoresApi.Migrations
 {
     [DbContext(typeof(JogadorContext))]
-    partial class JogadorContextModelSnapshot : ModelSnapshot
+    [Migration("20260708220142_AdicionarTabelaTimes")]
+    partial class AdicionarTabelaTimes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +45,11 @@ namespace JogadoresApi.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
                     b.Property<int?>("TimeId")
                         .HasColumnType("int");
 
@@ -50,24 +58,6 @@ namespace JogadoresApi.Migrations
                     b.HasIndex("TimeId");
 
                     b.ToTable("Jogadores");
-                });
-
-            modelBuilder.Entity("JogadoresApi.Model.Liga", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("varchar(40)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ligas");
                 });
 
             modelBuilder.Entity("JogadoresApi.Model.Time", b =>
@@ -93,43 +83,11 @@ namespace JogadoresApi.Migrations
                     b.ToTable("Times");
                 });
 
-            modelBuilder.Entity("LigaTime", b =>
-                {
-                    b.Property<int>("LigasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TimesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LigasId", "TimesId");
-
-                    b.HasIndex("TimesId");
-
-                    b.ToTable("LigaTime");
-                });
-
             modelBuilder.Entity("JogadoresApi.Model.Jogador", b =>
                 {
-                    b.HasOne("JogadoresApi.Model.Time", "Time")
+                    b.HasOne("JogadoresApi.Model.Time", null)
                         .WithMany("Elenco")
                         .HasForeignKey("TimeId");
-
-                    b.Navigation("Time");
-                });
-
-            modelBuilder.Entity("LigaTime", b =>
-                {
-                    b.HasOne("JogadoresApi.Model.Liga", null)
-                        .WithMany()
-                        .HasForeignKey("LigasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JogadoresApi.Model.Time", null)
-                        .WithMany()
-                        .HasForeignKey("TimesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("JogadoresApi.Model.Time", b =>
