@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JogadoresApi.Dtos
 {
-    public class AtualizarJogadorDto
+    public abstract class JogadorBaseDto
     {
         [Required(ErrorMessage = "O nome é obrigatório.")]
         [RegularExpression(@"^[a-zA-ZÀ-ÿ\s]+$", ErrorMessage = "O nome deve conter apenas letras.")]
@@ -19,18 +19,10 @@ namespace JogadoresApi.Dtos
         public int? Gols { get; set; }
 
         [Required(ErrorMessage = "O time é obrigatório.")]
-        [RegularExpression(@"^[a-zA-ZÀ-ÿ\s]+$", ErrorMessage = "O time deve conter apenas letras.")]
-        [StringLength(40, ErrorMessage = "O time deve ter no máximo 40 caracteres.")]
-        public string Time { get; set; } = string.Empty;
-
-        public AtualizarJogadorDto() { }
-
-        public AtualizarJogadorDto(string nome, string posicao, int? gols, string time)
-        {
-            Nome = nome;
-            Posicao = posicao;
-            Gols = gols;
-            Time = time;
-        }
+        public int? TimeId { get; set; }
     }
+
+    public class CriarJogadorDto : JogadorBaseDto { }
+
+    public class AtualizarJogadorDto : JogadorBaseDto { }
 }
