@@ -14,7 +14,7 @@ namespace JogadoresApi.Dtos
         [MaxLength(40, ErrorMessage = "O estádio deve ter no máximo 40 caracteres.")]
         public string Estadio { get; set; } = string.Empty;
 
-        public int? LigaId { get; set; }
+        public List<int>? LigasIds { get; set; }
     }
 
     public class CriarTimeDto : TimeBaseDto { }

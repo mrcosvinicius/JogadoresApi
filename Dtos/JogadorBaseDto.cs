@@ -20,6 +20,8 @@ namespace JogadoresApi.Dtos
 
         [Required(ErrorMessage = "O time é obrigatório.")]
         public int? TimeId { get; set; }
+
+        public string? Time { get; set; }
     }
 
     public class CriarJogadorDto : JogadorBaseDto { }
