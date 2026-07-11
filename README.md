@@ -50,9 +50,7 @@ JogadoresApi/
 ├── Properties/
 ├── appsettings.json
 ├── appsettings.Development.json.example
-├── seed.sql                    # Dados de exemplo (ligas, times e jogadores)
 ├── ESTRUTURA.md                # Responsabilidade de cada pasta
-├── RELACIONAMENTOS.md          # Detalhes dos relacionamentos
 ├── Program.cs
 └── JogadoresApi.csproj
 ```
