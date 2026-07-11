@@ -10,6 +10,8 @@ namespace JogadoresApi.Profiles
         {
             CreateMap<CriarLigaDto, Liga>();
             CreateMap<AtualizarLigaDto, Liga>();
+            CreateMap<Liga, ReadLigaDto>();
+            CreateMap<Liga, LigaResumoDto>();
         }
     }
 }
