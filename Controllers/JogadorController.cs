@@ -23,12 +23,15 @@ namespace JogadoresApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Jogador> ObterJogadores([FromQuery] int pula = 0, [FromQuery] int pega = 5)
+        public IEnumerable<ReadJogadorDto> ObterJogadores([FromQuery] int pula = 0, [FromQuery] int pega = 5)
         {
-            return _context.Jogadores
+            var jogadores = _context.Jogadores
                 .Include(j => j.Time)
                 .Skip(pula)
-                .Take(pega);
+                .Take(pega)
+                .ToList();
+
+            return _mapper.Map<List<ReadJogadorDto>>(jogadores);
         }
 
         [HttpGet("{id}")]
@@ -41,7 +44,7 @@ namespace JogadoresApi.Controllers
             {
                 return NotFound();
             }
-            return Ok(jogador);
+            return Ok(_mapper.Map<ReadJogadorDto>(jogador));
         }
 
         [HttpPost]
@@ -50,7 +53,11 @@ namespace JogadoresApi.Controllers
             var jogador = _mapper.Map<Jogador>(jogadorDto);
             _context.Jogadores.Add(jogador);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(ObterJogadorPorId), new { id = jogador.Id }, jogador);
+            if (jogador.TimeId != null)
+            {
+                _context.Entry(jogador).Reference(j => j.Time).Load();
+            }
+            return CreatedAtAction(nameof(ObterJogadorPorId), new { id = jogador.Id }, _mapper.Map<ReadJogadorDto>(jogador));
         }
 
         [HttpPut("{id}")]
