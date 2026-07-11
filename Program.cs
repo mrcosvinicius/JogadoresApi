@@ -8,7 +8,10 @@ var connectionString = builder.Configuration.GetConnectionString("JogadoresConne
 builder.Services.AddDbContext<JogadorContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString!)));
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
