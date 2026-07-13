@@ -31,7 +31,7 @@ namespace JogadoresApi.Controllers
                 .Take(pega)
                 .ToList();
 
-            return _mapper.Map<List<ReadTimeDto>>(times);
+            return _mapper.Map<ICollection<ReadTimeDto>>(times);
         }
 
         [HttpGet("{id}")]

@@ -31,7 +31,7 @@ namespace JogadoresApi.Controllers
                 .Take(pega)
                 .ToList();
 
-            return _mapper.Map<List<ReadJogadorDto>>(jogadores);
+            return _mapper.Map<ICollection<ReadJogadorDto>>(jogadores);
         }
 
         [HttpGet("{id}")]
