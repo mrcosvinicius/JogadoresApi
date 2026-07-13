@@ -52,7 +52,8 @@ JogadoresApi/
 ├── appsettings.Development.json.example
 ├── ESTRUTURA.md                # Responsabilidade de cada pasta
 ├── Program.cs
-└── JogadoresApi.csproj
+├── JogadoresApi.csproj
+└── seed.sql
 ```
 
 > Para uma explicação detalhada da função de cada pasta, veja [`ESTRUTURA.md`](ESTRUTURA.md).
