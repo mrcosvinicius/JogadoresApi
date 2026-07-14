@@ -27,5 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 
+app.UseDefaultFiles(); // serve wwwroot/index.html como página inicial
+app.UseStaticFiles();  // serve os arquivos da pasta wwwroot (HTML/CSS/JS)
+
 app.MapControllers();
 app.Run();
