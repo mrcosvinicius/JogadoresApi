@@ -1,0 +1,368 @@
+/* ===== Reset e base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --verde: #1b8a3c;
+    --verde-escuro: #146b2d;
+    --verde-claro: #e7f6ec;
+    --cinza-fundo: #f4f6f8;
+    --cinza-borda: #e2e8ee;
+    --texto: #24303c;
+    --texto-fraco: #6b7885;
+    --vermelho: #e0413a;
+    --sombra: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    background: var(--cinza-fundo);
+    color: var(--texto);
+    line-height: 1.5;
+}
+
+/* ===== Header ===== */
+header {
+    background: linear-gradient(135deg, var(--verde), var(--verde-escuro));
+    color: #fff;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: var(--sombra);
+}
+
+header h1 {
+    font-size: 1.9rem;
+    margin-bottom: 4px;
+}
+
+header p {
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+/* ===== Abas ===== */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background: #fff;
+    padding: 12px;
+    box-shadow: var(--sombra);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.tab {
+    border: none;
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tab:hover {
+    background: #d4efdf;
+}
+
+.tab.active {
+    background: var(--verde);
+    color: #fff;
+}
+
+/* ===== Layout ===== */
+main {
+    max-width: 1000px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.painel {
+    display: none;
+    animation: fade 0.3s ease;
+}
+
+.painel.active {
+    display: block;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra);
+    border: 1px solid var(--cinza-borda);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--verde-escuro);
+}
+
+/* ===== Formulários ===== */
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    align-items: end;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto-fraco);
+}
+
+.campo input,
+.campo select {
+    padding: 10px 12px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--texto);
+    background: #fff;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px var(--verde-claro);
+}
+
+.campo select[multiple] {
+    min-height: 90px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primario {
+    background: var(--verde);
+    color: #fff;
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 6px 12px;   /* mesmo tamanho do Excluir */
+    font-size: 0.8rem;
+}
+
+.btn-primario:hover {
+    background: var(--verde-escuro);
+}
+
+.btn-excluir {
+    background: #fdeceb;
+    color: var(--vermelho);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+.btn-excluir:hover {
+    background: var(--vermelho);
+    color: #fff;
+}
+
+/* ===== Tabela ===== */
+.tabela-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+thead th {
+    text-align: left;
+    padding: 12px 10px;
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
+    font-weight: 700;
+    border-bottom: 2px solid var(--verde);
+    white-space: nowrap;
+}
+
+tbody td {
+    padding: 11px 10px;
+    border-bottom: 1px solid var(--cinza-borda);
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+.vazio {
+    text-align: center;
+    color: var(--texto-fraco);
+    padding: 24px;
+}
+
+.tag {
+    display: inline-block;
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin: 2px 3px 2px 0;
+}
+
+/* ===== Toast ===== */
+#toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.toast-item {
+    background: var(--texto);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    box-shadow: var(--sombra);
+    font-size: 0.9rem;
+    animation: slidein 0.3s ease;
+    max-width: 340px;
+}
+
+.toast-item.sucesso { background: var(--verde-escuro); }
+.toast-item.erro { background: var(--vermelho); }
+
+@keyframes slidein {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--texto-fraco);
+    font-size: 0.88rem;
+}
+
+footer a {
+    color: var(--verde-escuro);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 600px) {
+    .tab { padding: 8px 12px; font-size: 0.85rem; }
+    header h1 { font-size: 1.5rem; }
+}
+
+/* ===== Ações do formulário (Salvar + Cancelar) ===== */
+.acoes-form {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-cancelar {
+    background: #eef1f4;
+    color: var(--texto-fraco);
+    padding: 6px 12px;   /* mesmo tamanho do Excluir */
+    font-size: 0.8rem;
+}
+
+.btn-cancelar:hover {
+    background: #dfe5ea;
+    color: var(--texto);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== Ações na célula (Editar + Excluir) ===== */
+.acoes-celula {
+    white-space: nowrap;
+}
+
+.acoes-celula .btn {
+    margin-right: 6px;
+}
+
+.btn-editar {
+    background: #e8f0fe;
+    color: #1a56cc;
+    padding: 6px 12px;   /* mesmo tamanho do Excluir */
+    font-size: 0.8rem;
+}
+
+.btn-editar:hover {
+    background: #1a56cc;
+    color: #fff;
+}
+
+/* ===== Paginação ===== */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 34px;          /* afasta os botões do "Página X" */
+    margin-top: 16px;
+}
+
+.btn-pagina {
+    background: var(--verde-claro);
+    color: var(--verde-escuro);
+    padding: 6px 12px;   /* mesmo tamanho do Excluir */
+    font-size: 0.8rem;
+}
+
+.btn-pagina:hover:not(:disabled) {
+    background: var(--verde);
+    color: #fff;
+}
+
+.btn-pagina:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.info-pagina {
+    font-size: 0.88rem;
+    color: var(--texto-fraco);
+    font-weight: 600;
+    min-width: 90px;
+    text-align: center;
+}
