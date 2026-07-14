@@ -4,6 +4,8 @@ API REST para gerenciamento de **jogadores, times e ligas** de futebol, desenvol
 
 A API permite cadastrar, consultar, atualizar (total e parcialmente) e remover registros dos três recursos, com validações, paginação, relacionamentos e persistência em banco de dados.
 
+Inclui ainda um **front-end básico** (HTML, CSS e JavaScript) servido pela própria aplicação, com interface para listar, cadastrar, editar e excluir registros.
+
 ---
 
 ## 🚀 Tecnologias
@@ -15,6 +17,8 @@ A API permite cadastrar, consultar, atualizar (total e parcialmente) e remover r
 - [AutoMapper](https://automapper.org/)
 - [Newtonsoft.Json](https://www.newtonsoft.com/json) (inclui suporte a JSON Patch)
 - [Swagger / Swashbuckle](https://swagger.io/)
+
+**Front-end:** HTML5, CSS3 e JavaScript (ES Modules), servido como arquivos estáticos pelo ASP.NET Core.
 
 ---
 
@@ -48,6 +52,10 @@ JogadoresApi/
 │   ├── TimeProfile.cs
 │   └── LigaProfile.cs
 ├── Properties/
+├── wwwroot/                    # Front-end servido pela própria API
+│   ├── index.html              # esqueleto (abas e seções geradas via JS)
+│   ├── css/style.css
+│   └── js/                     # módulos ES, um por responsabilidade (ver seção Front-end)
 ├── appsettings.json
 ├── appsettings.Development.json.example
 ├── ESTRUTURA.md                # Responsabilidade de cada pasta
@@ -128,16 +136,49 @@ mysql -uSEU_USUARIO -pSUA_SENHA -D Jogadores < seed.sql
 dotnet run
 ```
 
-A API estará disponível em:
+A aplicação estará disponível em:
 
 - HTTP: `http://localhost:5292`
 - HTTPS: `https://localhost:7016`
 
-Acesse o Swagger para testar os endpoints:
+Ao abrir a **raiz** (`http://localhost:5292`), o **front-end** é carregado. Para testar os endpoints diretamente, acesse o Swagger:
 
 ```
 http://localhost:5292/swagger
 ```
+
+---
+
+## 🖥️ Front-end
+
+O front-end é uma **SPA simples** (sem framework) servida como arquivos estáticos pela própria API — por isso não há problema de CORS. Fica na pasta `wwwroot/`.
+
+**Funcionalidades:**
+- Navegação por **abas** (Jogadores, Times, Ligas) sem recarregar a página.
+- **Listagem paginada** (5 registros por página, usa `?pula=&pega=` da API).
+- **Cadastro** via formulário (jogador com *select* de time; time com *multi-select* de ligas).
+- **Edição** (PUT): preenche o formulário com os dados atuais.
+- **Exclusão** com confirmação.
+- **Notificações (toast)** de sucesso/erro, exibindo as mensagens de validação da API.
+
+**Arquitetura (ES Modules):** o JavaScript é dividido em módulos por responsabilidade, carregados a partir de `main.js`:
+
+| Módulo | Responsabilidade |
+|--------|------------------|
+| `config.js` | "Mapa" declarativo dos recursos (campos, colunas, edição) |
+| `state.js` | Estado compartilhado (paginação, edição) e cache de fontes |
+| `ui.js` | Utilitários de interface (`$`, `tag`, `toast`) |
+| `api.js` | Comunicação HTTP (`fetch` + tratamento de erros) |
+| `fontes.js` | Carrega times/ligas para os `<select>` |
+| `layout.js` | Gera as abas e seções a partir do `config` |
+| `formulario.js` | Montar, ler, preencher (edição) e limpar o formulário |
+| `tabela.js` | Montar cabeçalho e desenhar as linhas |
+| `paginacao.js` | Controles de paginação (Anterior/Próxima) |
+| `acoes.js` | Orquestração do CRUD (conecta API + UI) |
+| `abas.js` | Navegação entre abas |
+| `main.js` | Ponto de entrada |
+
+> Como o HTML das seções é gerado a partir do `config.js`, adicionar um novo recurso exige apenas **uma entrada no `config`** — a aba, a seção, o formulário e a tabela são criados automaticamente.
 
 ---
 
@@ -270,7 +311,8 @@ As validações usam **Data Annotations** (nos Models e nos DTOs de entrada); o 
 
 - `Nome`, `Posicao`, `Estadio`: obrigatórios, apenas letras e espaços, com limite de caracteres.
 - `Gols`: obrigatório, inteiro maior ou igual a zero (`int?` + `[Range]`).
-- FKs (`timeId`, `ligasIds`): opcionais.
+- `timeId` (em Jogador): **obrigatório** (`[Required]`).
+- `ligasIds` (em Time): opcional (lista de IDs de liga).
 
 ---
 
